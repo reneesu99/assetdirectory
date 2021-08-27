@@ -9,6 +9,9 @@
     margin-bottom: 12px; /* Add some space below the input */
   }
 
-table {
-    border: 1px solid black;
-  }
+table, th, td {
+  border: 1px solid black;
+}
+td {
+  text-align: center
+}
