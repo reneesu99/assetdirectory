@@ -1,7 +1,11 @@
 
-fetch("https://data.energystar.gov/resource/8t9c-g3tn.json")
-   .then(response => response.json())
-   .then(fridges => loadentries(fridges));
+function fetchAndDisplay(url, tableElement) 
+{
+  fetch(url)
+  .then(response => response.json())
+  .then(items=>loadentries(items, tableElement));
+}
+
 
 
   var input, filter, table, entry, a, i, txtValue;
@@ -30,22 +34,32 @@ fetch("https://data.energystar.gov/resource/8t9c-g3tn.json")
 
 var table, row, cell1, cell2, cell3, response;
 
-loadentries = response => {
-    table = document.getElementById('fridge_info');
-
-    var heading = response[1];
+function loadentries(data, itemtype) {
+  table = document.getElementById(itemtype)  
+  var heading = data[1];
     row = table.insertRow();
+    cell = row.insertCell();
+    cell.innerHTML = 'Type'
     for(const [key, value] of Object.entries(heading)) {
       cell=row.insertCell();
       cell.innerHTML = `${key}`
     }
 
-    for(var i =0; i < response.length; i++) {
-        var item = response[i];
+    for(var i =0; i < data.length; i++) {
+        var item = data[i];
         row = table.insertRow();
+        cell = row.insertCell();
+        cell.innerHTML = `${itemtype}`
         for(const [key, value] of Object.entries(item)) {
           cell = row.insertCell();
           cell.innerHTML = `${value}`
         }
       }
 }
+
+var data = $.csv.toObjects("C:/Users/renee/Downloads/HWSN_Sustainability.csv");
+
+function loadpersonalentries(){
+  data
+}
+
