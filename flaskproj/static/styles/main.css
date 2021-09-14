@@ -103,7 +103,6 @@
   }
   
   .container-table100 {
-    width: 100%;
     min-height: 100vh;
     background: #c850c0;
     background: -webkit-linear-gradient(45deg, #4158d0, #c850c0);
@@ -132,8 +131,6 @@
     background: white;
     border-radius: 10px;
     overflow: hidden;
-    width: 100%;
-    margin: 0 auto;
     position: relative;
   }
   table * {

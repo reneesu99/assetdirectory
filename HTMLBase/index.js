@@ -13,7 +13,7 @@ function fetchAndDisplay(url, tableElement)
   function myFunction() {
     input = document.getElementById('myInput');
     filter = input.value.toUpperCase();
-    table = document.getElementById("fridge_info");
+    table = document.getElementById("fridge");
     entry = table.getElementsByTagName('tr');
   
     // Loop through all list items, and hide those who don't match the search query
