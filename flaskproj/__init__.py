@@ -12,24 +12,25 @@ cur = conn.cursor()
 cur.execute("DROP TABLE IF EXISTS fridges;")
 
 cur.execute("""CREATE TABLE fridges(
-    "EnergyStarID" TEXT,
-    "brand_name" TEXT,
-    "model_number" TEXT,
-    "fridge_type" TEXT,
-    "product_class" TEXT,
-    "defrost_type" TEXT,
-    "compact" TEXT,
-    "built_in" TEXT,
-    "thru_the_door" TEXT,
-    "ice_maker" TEXT,
-    "capacity_total_volume_ft3" INT,
-    "adjusted_volume_ft3" INT,
-    "annual_energy_use_kwh_yr" TEXT,
-    "us_federal_standard_kwh_yr" TEXT,
-    "percent_less_energy_use_than_us_federal_standard" TEXT,
-    "meets_ENERGYSTAR_most_efficient_2021" TEXT
-);
+     "EnergyStarID" TEXT,
+     "brand_name" TEXT,
+     "model_number" TEXT,
+     "fridge_type" TEXT,
+     "product_class" TEXT,
+     "defrost_type" TEXT,
+     "compact" TEXT,
+     "built_in" TEXT,
+     "thru_the_door" TEXT,
+     "ice_maker" TEXT,
+     "capacity_total_volume_ft3" INT,
+     "adjusted_volume_ft3" INT,
+     "annual_energy_use_kwh_yr" TEXT,
+     "us_federal_standard_kwh_yr" TEXT,
+     "percent_less_energy_use_than_us_federal_standard" TEXT,
+     "meets_ENERGYSTAR_most_efficient_2021" TEXT
+ );
 """)
+
 
 #connect CSV file to database
 

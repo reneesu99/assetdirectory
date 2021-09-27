@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script src="{{url_for('static', filename='table.js')}}"></script>
 
     <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='styles/main.css') }}">
     <meta charset="UTF-8">
@@ -15,9 +14,18 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='table.js')}}"></script>
+
   </head>
   <body >
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+
+    <input type="text" id="myInput" onkeyup="search()" placeholder="Search for names..">
+    <select class="custom-select" id="inputGroupSelect01">
+      <option selected>Choose...</option>
+      <option value="1" onselect="energytoggle()">No</option>
+      <option value="0" onselect="energytoggle()">Yes</option>
+    </select>
+    </div>
     <table id = "fridge" class = "styled-table"> 
       <tr>
         {%for k,v in data[0].items()%}
@@ -33,7 +41,7 @@
           {% set model_number = model_number | replace("/", "%2f") %}
           {%for k,v in dict.items()%}
             <td>
-              <a href = "{{url_for('details', model_number=model_number)}}">{{ v }}</a>
+              <a name = {{k}} href = "{{url_for('details', model_number=model_number)}}">{{ v }}</a>
             </td>
           {% endfor %}
         </tr>

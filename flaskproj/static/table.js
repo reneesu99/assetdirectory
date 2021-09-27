@@ -1,7 +1,8 @@
+console.log("hi")
 var input, filter, table, entry, a, i, txtValue;
 
-  function myFunction() {
-    // console.log("TEST");
+  function search() {
+    console.log("TEST");
     input = document.getElementById('myInput');
     filter = input.value.toUpperCase();
     table = document.getElementById("fridge");
@@ -23,6 +24,27 @@ var input, filter, table, entry, a, i, txtValue;
     }
   }
 
-  function store_item() {
+  function energytoggle() {
+    console.log("test");
+    input = document.getElementById('energystartf');
+    filter = "";
+    if (input.value == 0){
+      filter = "NO";
+    } else if (input.value == 1) {
+      filter = "YES";
+    }
+    entry = document.getElementsByName('Meets ENERGY STAR Most Efficient 2021 Criteria');  
+    for (i =0; i < entry.length; i++) {
+      value = entry[i]
+      txtValue = value.textContent || a.innerText;
+      if(txtValue.toUpperCase() == filter) {
+        entry[i].style.display = "";
+      }
+        else {
+        entry[i].style.display = "none";
+      }
     
+
+    }
   }
+
