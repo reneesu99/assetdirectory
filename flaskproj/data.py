@@ -3,6 +3,7 @@ import sqlite3
 
 import sqlite3
 import csv
+import copy
 
 # connect to database
 conn = sqlite3.connect("AssetManager.db")
@@ -10,33 +11,44 @@ cur = conn.cursor()
 
 
 
-file = open("C:/Users/renee/Downloads/ENERGY_STAR_Certified_Residential_Refrigerators.csv")
 
-
-class File:
-    def __init__(self, headers, number_of_columns, number_of_entries):
-        self.headers = file(open)
 
 def create_headings(file):
     file = open(file)
     rows = csv.reader(file)
     table_headings = []
-    i = 0
+    value =[]
     for row in rows:
         for entry in row:
             table_headings.append(entry)
         break
+    for row in rows:
+        for entry in row:
+            value.append(entry)
+        break
+    print(value)
     stringed_headings = ""
+    j=0
     for heading in table_headings:
-        print(heading)
-        stringed_headings += "'" + str(heading) + "'"
-        if heading.isdecimal():
+        heading1 = copy.deepcopy(heading)
+        heading = str(heading)
+        heading = heading.replace(" ","_")
+        heading = heading.replace("-", "_")
+        heading = heading.replace("(", "")
+        heading = heading.replace(")", "")
+        heading = heading.replace("/", "")
+        stringed_headings += heading
+        # print(rows[j])
+        print(type(value[j]))
+        if any(c.isalpha() for c in value[j]) == False:
             stringed_headings += " FLOAT"
         else:
             stringed_headings += " TEXT"
-        if heading != table_headings[-1]:
+        if heading1 != table_headings[-1]:
             stringed_headings += ","
-    print(stringed_headings)
+        # print(stringed_headings)
+        print(table_headings[-1])
+        j+=1
     return stringed_headings
 
 def drop_table(table_name):
@@ -48,35 +60,20 @@ def drop_table(table_name):
 def create_table(create_query):
     conn = sqlite3.connect("AssetManager.db")
     cur = conn.cursor()
-    
+    print(create_query)
     cur.execute(create_query)
 
-#    """CREATE TABLE fridges(
-#     "EnergyStarID" TEXT,
-#     "brand_name" TEXT,
-#     "model_number" TEXT,
-#     "fridge_type" TEXT,
-#     "product_class" TEXT,
-#     "defrost_type" TEXT,
-#     "compact" TEXT,
-#     "built_in" TEXT,
-#     "thru_the_door" TEXT,
-#     "ice_maker" TEXT,
-#     "capacity_total_volume_ft3" INT,
-#     "adjusted_volume_ft3" INT,
-#     "annual_energy_use_kwh_yr" TEXT,
-#     "us_federal_standard_kwh_yr" TEXT,
-#     "percent_less_energy_use_than_us_federal_standard" TEXT,
-#     "meets_ENERGYSTAR_most_efficient_2021" TEXT
-# );
-# """
 
 def read_table(file, insert_query):
     file = open(file)
     rows = csv.reader(file)
+    rows2 = []
+    for row in rows:
+        rows2.append(tuple(row))
     conn = sqlite3.connect("AssetManager.db")
     cur = conn.cursor()
-    cur.executemany(insert_query, rows)
+    cur.executemany(insert_query, list(rows2))
+    conn.commit()
 
 def column_number(file):
     file = open(file)
@@ -104,11 +101,11 @@ def insert_values_query(table_name, variable_number):
             placeholder += ")"
             i+=1
 
-    insert_query = '"' +"INSERT INTO " + table_name  +  " VALUES " + placeholder + '"'
+    insert_query = "INSERT INTO " + table_name  +  " VALUES " + placeholder
     return insert_query
 
 
-def big_kahuna(file, table_name):
+def createsqltable(file, table_name):
     table_headings = create_headings(file)
     create_query = create_table_query(table_name, table_headings)
     variable_number = column_number(file)
@@ -118,35 +115,7 @@ def big_kahuna(file, table_name):
     read_table(file, insert_query)
 
 
-big_kahuna("C:/Users/renee/Downloads/ENERGY_STAR_Certified_Residential_Refrigerators.csv", "fridges")
+createsqltable("C:/Users/renee/Downloads/ENERGY_STAR_Certified_Residential_Refrigerators.csv", "fridges")
+# createsqltable("C:/Users/renee/Downloads/ENERGY_STAR_Certified_Dehumidifiers.csv", "dehum")
 
 
-
-# #refresh and pull in new fridges database
-# cur.execute("DROP TABLE IF EXISTS fridges;")
-
-
-# cur.execute("""CREATE TABLE fridges(
-#     "EnergyStarID" TEXT,
-#     "brand_name" TEXT,
-#     "model_number" TEXT,
-#     "fridge_type" TEXT,
-#     "product_class" TEXT,
-#     "defrost_type" TEXT,
-#     "compact" TEXT,
-#     "built_in" TEXT,
-#     "thru_the_door" TEXT,
-#     "ice_maker" TEXT,
-#     "capacity_total_volume_ft3" INT,
-#     "adjusted_volume_ft3" INT,
-#     "annual_energy_use_kwh_yr" TEXT,
-#     "us_federal_standard_kwh_yr" TEXT,
-#     "percent_less_energy_use_than_us_federal_standard" TEXT,
-#     "meets_ENERGYSTAR_most_efficient_2021" TEXT
-# );
-# """)
-
-# """" CREATE TABLE fridges('ENERGY STAR Unique ID' TEXT, 'Brand Name' TEXT, 'Model Number' TEXT, 'Type' TEXT, 'Product Class' TEXT, 'Defrost Type' TEXT, 'Compact' TEXT, 'Built-in' TEXT, 'Thru the Door Dispenser' TEXT, 'Ice Maker' TEXT, 'Capacity (Total Volume) (ft3)' TEXT, 'Adjusted Volume (ft3)' TEXT, 'Annual Energy Use (kWh/yr)' TEXT, 'US Federal Standard (kWh/yr)' TEXT, 'Percent Less Energy Use than US Federal Standard' TEXT, 'Meets ENERGY STAR Most Efficient 2021 Criteria' TEXT);
-# """"
-
-# #connect CSV file to database

@@ -3,7 +3,7 @@ var input, filter, table, entry, a, i, txtValue;
 
   function search() {
     console.log("TEST");
-    input = document.getElementById('myInput');
+    input = document.getElementById('search');
     filter = input.value.toUpperCase();
     table = document.getElementById("fridge");
     entry = document.getElementsByTagName('tr');
@@ -12,9 +12,8 @@ var input, filter, table, entry, a, i, txtValue;
     for (i = 0; i < entry.length; i++) {
       if (i != 0){
         a = entry[i];
-        // console.log(a) 
         txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) == -1) {
+        if (txtValue.toUpperCase().includes(filter)) {
            entry[i].style.display = "";
          } else {
           entry[i].style.display = "none";
@@ -24,24 +23,29 @@ var input, filter, table, entry, a, i, txtValue;
     }
   }
 
-  function energytoggle() {
+  function energytoggle(value) {
     console.log("test");
-    input = document.getElementById('energystartf');
     filter = "";
-    if (input.value == 0){
-      filter = "NO";
-    } else if (input.value == 1) {
-      filter = "YES";
+    console.log(value)
+    if (value == "0"){
+      filter = "No";
+    } else if (value == "1") {
+      filter = "Yes";
     }
-    entry = document.getElementsByName('Meets ENERGY STAR Most Efficient 2021 Criteria');  
+    console.log(filter)
+    entry = document.getElementsByName('Meets_ENERGY_STAR_Most_Efficient_2021_Criteria');  
+    var fullentry = document.getElementsByTagName('tr');
     for (i =0; i < entry.length; i++) {
-      value = entry[i]
-      txtValue = value.textContent || a.innerText;
-      if(txtValue.toUpperCase() == filter) {
-        entry[i].style.display = "";
+      var value1 = entry[i]
+      entryvalue = (value1.textContent || value1.innerText)
+      console.log(fullentry[i+1])
+      console.log(entryvalue)
+
+      if(entryvalue== filter) {
+        fullentry[i+1].style.display = "";
       }
         else {
-        entry[i].style.display = "none";
+        fullentry[i+1].style.display = "none";
       }
     
 
