@@ -23,7 +23,7 @@ var input, filter, table, entry, a, i, txtValue;
     }
   }
 
-  function energytoggle(value) {
+  function energytoggle(value, criteria) {
     console.log("test");
     filter = "";
     console.log(value)
@@ -32,8 +32,7 @@ var input, filter, table, entry, a, i, txtValue;
     } else if (value == "1") {
       filter = "Yes";
     }
-    console.log(filter)
-    entry = document.getElementsByName('Meets_ENERGY_STAR_Most_Efficient_2021_Criteria');  
+    entry = document.getElementsByName(criteria);  
     var fullentry = document.getElementsByTagName('tr');
     for (i =0; i < entry.length; i++) {
       var value1 = entry[i]

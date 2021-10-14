@@ -15,7 +15,7 @@
 
   </head>
   <body >
-
+<!-- TODO : add locked top row -->
   
     <div class="form-group" whitespace = "nowrap">
       <!-- <label style = "display: inline-block; width: 50%">Search by Model Number or Brand</label> -->
@@ -23,13 +23,13 @@
       <button style = "display: inline-block; width: 5%"type="submit" class="btn btn-primary" onclick = "search()">Submit</button>
     </div>
     
-    <select style = "width: 20%" class="form-select" id="energystartf", onChange="energytoggle(this.value)">
+    <select style = "width: 20%" class="form-select" id="energystartf", onChange="energytoggle(this.value, 'Meets_ENERGY_STAR_Most_Efficient_2021_Criteria')">
       <option selected>EnergyStar Most Efficient</option>
       <option value="0" onclick="energytoggle()">No</option>
       <option value="1" onclick="energytoggle()">Yes</option>
     </select>
-    <select style = "width: 20%" class="form-select" id="Energy Use", onChange="">
-      <option selected>EnergyStar Most Efficient</option>
+    <select style = "width: 20%" class="form-select" id="energystartf", onChange="energytoggle(this.value, 'Compact')">
+      <option selected>Compact</option>
       <option value="0" onclick="energytoggle()">No</option>
       <option value="1" onclick="energytoggle()">Yes</option>
     </select>
