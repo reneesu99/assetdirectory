@@ -5,11 +5,14 @@ import { useEffect, useState } from 'react';
 // import matchSorter from 'match-sorter'
 
 // import makeData from './makeData'
+import Details from "./Details"
 
 
 const Table = (props) => {
   const [data, setData] = useState([]);
-  console.log(props)
+  const [searchText, setSearchText] = useState("");
+  const [popupbutton, setPopupButton] = useState(false)
+  const [selecteditem, setSelectedItem] = useState()
   useEffect( () => {
     fetch(props.url,{
       headers : { 
@@ -17,33 +20,47 @@ const Table = (props) => {
         'Accept': 'application/json'
        }
     }).then(result=>result.json()).then(json=>setData(json));
-  }, []
+  }, [props.url]
   )
   if (data.length == 0) {
     return <></>;
   }
+  function search(){
+    const inputvalue = document.getElementById('searchvalue').value
+    setSearchText(inputvalue);    
+  }
+  function filter(product){
+    if (product.model_number.includes(searchText)|| product.brand_name.includes(searchText)){
+      return true
+    }
+  }
+  
+  function openpopup(product){
+    setPopupButton(true)
+    setSelectedItem(product)
+    console.log(product)
+  }
   var headers =[]
   Object.keys(data[1]).map(x=>headers.push(x))
-  // let newdata = data.filter(product => should_product_be_visible(product).map(product =><some_html>)
-  //     let basketballPlayers = students.filter(function (student) {
-  //       return student.sports === "Basketball";
-  //   }).map(function (student) {
-  //       return student.name;
   return(
     <div>
-      <p>{props.appliance}</p>
-        <table id = {props.appliance} class = "table table-striped table-bordered table-hover table-sm">
-          <thead style={{position: "sticky", top: 0}} class = "sticky-header">
+      <input type = "text"  id = "searchvalue"placeholder = "search by model number or brand"/>
+      <button type="submit" onClick = {search}><i className="fa fa-search">Search</i></button>
+      <Details trigger = {popupbutton} selecteditem = {selecteditem}/>
+        <table id = {props.appliance} className = "table table-striped table-bordered table-hover table-sm">
+          <thead style={{position: "sticky", top: 0}} className = "sticky-header">
             <tr id="headers">
-              {headers.map(heading =><th>{heading}</th>)              
+              {headers.map(heading =><th key = {heading}>{heading}</th>)              
                } 
             </tr>
           </thead>
           <tbody>
-            {data.map( 
-              product =><tr>{headers.map(header =><td>{" "+product[header]}</td>)}</tr>)              
-              } 
+
+            {data.filter(filter).map( 
+              product =><tr onClick = {()=>openpopup(product)}>{headers.map(header =><td>{" "+product[header]}</td>)}</tr>)              
+              }
           </tbody>
+
         </table>
     </div>
   )
